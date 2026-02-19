@@ -68,12 +68,17 @@ void printOutput(char input[], int length, int capCount)
 }
 
 // -------------------- task 2
-int SortAndFind(char Arr[], int x) // if Arr is char then each element cant be greater than 127 or less than -128
+int SortAndFind(int Arr[], int x) // if Arr is char then each element cant be greater than 127 or less than -128
 {
-    int len = getLength(Arr);
+    int len = 0;
+    while (Arr[len] != -1) // -1 is the end of the Arr 
+    {
+        len++;
+    }
+
     int index = -1;
-    char *smaller;
-    char *bigger;
+    int *smaller;
+    int *bigger;
 
     // bubble sort
     for (int i = len - 1; i > 0; i--)
@@ -84,7 +89,7 @@ int SortAndFind(char Arr[], int x) // if Arr is char then each element cant be g
             {
                 smaller = &Arr[j + 1]; // points to the smaller element
                 bigger = &Arr[j];      // points to the bigger element
-                char temp = *smaller;
+                int temp = *smaller;
                 *smaller = *bigger; // move the bigger one to next
                 *bigger = temp;     // move the smaller one to previous
             }
@@ -175,16 +180,50 @@ int main(int argc, char const *argv[])
     printOutput(str, length, capCount);
     printf("\n \n---------------------------------------------------- task 1\n");
 
-    char arr[] = {'d', 'a', 'c', 'b', 'e'};
-    int x = 'c';
-    int index = SortAndFind(arr, x);
+    int arr[100];
+    int x;
+    int i = 0;
+
+    printf("Enter integers for the array but needs to end with -1: \n");
+    while(1){
+        scanf("%d", &arr[i]);
+        if (arr[i] == -1){
+            break;
+        }
+        i++;
+    }
+
+    printf("Enter the value to find: ");
+    scanf("%d", &x);
+
+    int index = SortAndFind(arr, x); // sort array and get index
 
     printf("Sorted array: ");
-    for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); i++)
-    {
-        printf("%c ", arr[i]);
+    for (int i = 0; arr[i] != -1; i++)
+    { // print until sentinel -1
+        printf("%d ", arr[i]);
     }
-    printf("\nIndex of %c: %d\n", x, index);
+    printf("\n");
+
+    if (index != -1)
+    {
+        printf("Index of %d: %d\n", x, index);
+    }
+    else
+    {
+        printf("%d not found in the array\n", x);
+    }
+
+    // char arr[] = {'d', 'a', 'c', 'b', 'e'}
+    // int x = 'c';
+    // int index = SortAndFind(arr, x);
+
+    // printf("Sorted array: ");
+    // for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); i++)
+    // {
+    //     printf("%c ", arr[i]);
+    // }
+    // printf("\nIndex of %c: %d\n", x, index);
 
     printf("\n \n---------------------------------------------------- task 2\n");
 
